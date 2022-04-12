@@ -5,10 +5,8 @@ from cerberus import Validator
 from devdeck_core.control_context import ControlContext
 from devdeck_core.settings.control_validation_error import ControlValidationError
 
-
 class DeckControlContextBlock(Exception):
     pass
-
 
 class DeckContextManager:
     def __init__(self, deck_context, key_no):
@@ -71,3 +69,4 @@ class DeckControl:
         validator = Validator(self.settings_schema())
         if not validator.validate(self.settings, self.settings_schema()):
             raise ControlValidationError(self, self.__key_no, validator.errors)
+        self.settings = validator.normalized( self.settings )
